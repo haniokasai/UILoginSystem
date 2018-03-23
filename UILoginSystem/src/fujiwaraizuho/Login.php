@@ -40,6 +40,8 @@ class Login extends PluginBase implements Listener
 	public $lang;
 	public $db;
 
+	public $moneyAPI;
+
 	public function onEnable()
 	{
 		if (!file_exists($this->getDataFolder())) {
@@ -48,7 +50,11 @@ class Login extends PluginBase implements Listener
 
 		$this->db = new DB($this->getDataFolder(), $this);
 		$this->lang = new Lang();
-		$this->getServer()->getPluginManager()->registerEvents(new EventListener($this, $this->db, $this->lang), $this);
+		$this->getServer()->getPluginManager()->registerEvents(new EventListener($this, $this->db, $this->lang,$this->moneyAPI), $this);
+
+
+        $this->moneyAPI = $this->getServer()->getPluginManager()->getPlugin("LoginSystem");
+
 
 		$this->getLogger()->info("§aINFO §f> §aEnabled...");
 	}

@@ -30,11 +30,12 @@ class EventListener implements Listener
 	 * EventListener constructor.
 	 * @param Login $owner
 	 */
-	public function __construct(Login $owner, DB $db, Lang $lang)
+	public function __construct(Login $owner, DB $db, Lang $lang,$moneyAPI)
 	{
 		$this->owner = $owner;
 		$this->db = $db;
 		$this->lang = $lang;
+		$this->moneyAPI = $moneyAPI;
 	}
 
 
@@ -108,6 +109,11 @@ class EventListener implements Listener
 	{
 		$player = $event->getPlayer();
 
+		if(!is_null($this->moneyAPI)){
+		    if($this->moneyAPI->playerExist($player->getName())){
+		        return;
+            }
+        }
 		if (isset($player->register)) {
 			$data = [
 				"type" => "modal",
